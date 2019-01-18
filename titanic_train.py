@@ -12,21 +12,22 @@ y_train = data.train_data_y
 #y_test = np.random.randint(2, size=(100, 1))
 
 model = Sequential()
-model.add(Dense(256, input_dim=5, activation='relu'))
-model.add(Dense(128,  activation='relu'))
+model.add(Dense(128, input_dim=6, activation='sigmoid'))
 model.add(Dropout(0.25))
-model.add(Dense(64,  activation='relu'))
-model.add(Dense(64,  activation='relu'))
+model.add(Dense(64,  activation='sigmoid'))
+model.add(Dropout(0.25))
+model.add(Dense(32,  activation='sigmoid'))
+model.add(Dropout(0.25))
 
 model.add(Dense(1, activation='sigmoid'))
-opt = optimizers.Adam(lr=0.005)
+opt = optimizers.Adam(lr=0.00045)
 model.compile(loss='binary_crossentropy',
               optimizer=opt,
               metrics=['accuracy'])
 #callback = EarlyStopping(monitor='val_loss', verbose=1)
 model.fit(x_train, y_train,
-          epochs=5000,
-          validation_split=0.2,
+          epochs=10000,
+          validation_split=30,
           batch_size=64)
           #,callbacks=[callback])
 # serialize model to JSON
